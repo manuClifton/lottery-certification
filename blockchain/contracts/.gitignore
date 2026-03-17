@@ -1,0 +1,7 @@
+# Variables sensibles locales
+.env
+
+# Artefactos de compilacion Foundry
+cache/
+out/
+broadcast/
