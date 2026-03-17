@@ -64,3 +64,11 @@ $ forge --help
 $ anvil --help
 $ cast --help
 ```
+
+## Monorepo dependency workflow
+
+This contracts folder lives inside a monorepo with a single `.git` at the repository root.
+
+- Install dependencies from `blockchain/contracts` with `forge install <org>/<repo> --no-git`.
+- Do not use submodules for this folder's libraries.
+- Commit the resulting `lib/<dependency>` files so other machines only need `git pull`.
