@@ -1,4 +1,5 @@
 const express = require("express");
+const authRoutes = require("./routes/authRoutes");
 const drawRoutes = require("./routes/drawRoutes");
 const verifyRoutes = require("./routes/verifyRoutes");
 const errorMiddleware = require("./middlewares/errorMiddleware");
@@ -12,6 +13,7 @@ app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
+app.use(authRoutes);
 app.use(drawRoutes);
 app.use(verifyRoutes);
 app.use(errorMiddleware);

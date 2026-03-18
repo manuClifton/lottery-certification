@@ -2,6 +2,7 @@ const express = require("express");
 const multer = require("multer");
 const AppError = require("../errores/AppError");
 const drawController = require("../controllers/drawController");
+const authMiddleware = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
@@ -19,7 +20,12 @@ const upload = multer({
   }
 });
 
-router.post("/certify-draw", upload.single("file"), drawController.certifyDraw);
-router.get("/draws", drawController.getDraws);
+router.post(
+  "/certify-draw",
+  authMiddleware,
+  upload.single("file"),
+  drawController.certifyDraw
+);
+router.get("/draws", authMiddleware, drawController.getDraws);
 
 module.exports = router;
