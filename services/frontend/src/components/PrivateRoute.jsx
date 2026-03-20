@@ -2,7 +2,7 @@ import { Navigate } from "react-router-dom";
 
 function PrivateRoute({ isAuthenticated, children }) {
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/lottery-certification" replace />;
   }
 
   return children;

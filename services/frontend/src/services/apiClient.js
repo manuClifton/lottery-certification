@@ -3,11 +3,18 @@ import { getToken } from "../utils/storage";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3001";
 
 async function request(path, options = {}) {
-  const response = await fetch(`${API_BASE_URL}${path}`, options);
+  let response;
+
+  try {
+    response = await fetch(`${API_BASE_URL}${path}`, options);
+  } catch {
+    throw new Error("No se pudo conectar con la API. Verifica tu conexion o que el servidor este activo");
+  }
+
   const json = await response.json().catch(() => ({}));
 
   if (!response.ok) {
-    throw new Error(json?.error?.message || "Request failed");
+    throw new Error(json?.error?.message || "La solicitud fallo");
   }
 
   return json.data;

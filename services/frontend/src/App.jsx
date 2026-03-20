@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import Layout from "./components/Layout";
+import AdminLayout from "./components/AdminLayout";
 import PrivateRoute from "./components/PrivateRoute";
+import PublicLayout from "./components/PublicLayout";
 import { useAuth } from "./hooks/useAuth";
 import CertifyDrawPage from "./pages/private/CertifyDrawPage";
 import DrawsPage from "./pages/private/DrawsPage";
@@ -14,32 +15,56 @@ function App() {
     <Routes>
       <Route
         path="/"
-        element={<Layout isAuthenticated={isAuthenticated} onLogout={logout} />}
+        element={
+          isAuthenticated ? (
+            <Navigate to="/dashboard/certify" replace />
+          ) : (
+            <Navigate to="/verify" replace />
+          )
+        }
+      />
+
+      <Route
+        path="/lottery-certification"
+        element={
+          <PublicLayout>
+            <LoginPage onLogin={login} isAuthenticated={isAuthenticated} />
+          </PublicLayout>
+        }
+      />
+
+      <Route
+        path="/verify"
+        element={
+          isAuthenticated ? (
+            <AdminLayout onLogout={logout} />
+          ) : (
+            <PublicLayout />
+          )
+        }
       >
-        <Route index element={<Navigate to="/verify" replace />} />
-        <Route path="verify" element={<VerifyDrawPage />} />
-        <Route
-          path="login"
-          element={<LoginPage onLogin={login} isAuthenticated={isAuthenticated} />}
-        />
-        <Route
-          path="dashboard/certify"
-          element={
-            <PrivateRoute isAuthenticated={isAuthenticated}>
-              <CertifyDrawPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="dashboard/draws"
-          element={
-            <PrivateRoute isAuthenticated={isAuthenticated}>
-              <DrawsPage />
-            </PrivateRoute>
-          }
-        />
-        <Route path="*" element={<Navigate to="/verify" replace />} />
+        <Route index element={<VerifyDrawPage />} />
       </Route>
+
+      <Route
+        path="/dashboard"
+        element={
+          <PrivateRoute isAuthenticated={isAuthenticated}>
+            <AdminLayout onLogout={logout} />
+          </PrivateRoute>
+        }
+      >
+        <Route
+          path="certify"
+          element={<CertifyDrawPage />}
+        />
+        <Route
+          path="draws"
+          element={<DrawsPage />}
+        />
+      </Route>
+
+      <Route path="*" element={<Navigate to="/verify" replace />} />
     </Routes>
   );
 }

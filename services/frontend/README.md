@@ -1,16 +1,16 @@
-# Frontend Service
+# Servicio Frontend
 
-React frontend for lottery certification.
+Aplicacion React para certificacion de sorteos.
 
-## Routes
+## Rutas
 
-- Public: `/verify`
-- Public: `/login`
-- Private: `/dashboard/certify`
-- Private: `/dashboard/draws`
+- Publica: `/verify`
+- Publica (acceso admin): `/lottery-certification`
+- Privada: `/dashboard/certify`
+- Privada: `/dashboard/draws`
 
-## Setup
+## Configuracion
 
-1. Copy `.env.example` to `.env`
-2. Run `npm install`
-3. Run `npm run dev`
+1. Copiar `.env.example` a `.env`
+2. Ejecutar `npm install`
+3. Ejecutar `npm run dev`
