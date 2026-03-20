@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require('cors');
 const authRoutes = require("./routes/authRoutes");
 const drawRoutes = require("./routes/drawRoutes");
 const verifyRoutes = require("./routes/verifyRoutes");
@@ -6,6 +7,12 @@ const errorMiddleware = require("./middlewares/errorMiddleware");
 const logger = require("./util/logger");
 
 const app = express();
+
+app.use(cors({
+  origin: 'http://localhost:5173', // <--- Asegurate que sea el puerto 5173
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
 
 app.use(express.json());
 
