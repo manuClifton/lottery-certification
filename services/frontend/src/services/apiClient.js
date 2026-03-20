@@ -40,6 +40,16 @@ export function verifyDraw(drawHash) {
   });
 }
 
+export function verifyDrawByCriteria(payload) {
+  return request("/verify-draw-by-date", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+  });
+}
+
 export function getDraws() {
   return request("/draws", {
     headers: {

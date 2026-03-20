@@ -7,3 +7,67 @@
 body {
   @apply min-h-screen bg-slate-100 text-slate-900;
 }
+
+.game-button-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.game-button {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+}
+
+.game-button img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.game-button:hover img {
+  transform: scale(1.1);
+}
+
+.game-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+.game-button:hover::after {
+  opacity: 1;
+}
+
+.game-button-label {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  right: 8px;
+  z-index: 2;
+  border-radius: 6px;
+  background: rgba(15, 23, 42, 0.75);
+  padding: 6px 8px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.game-button.is-selected {
+  cursor: default;
+}
+
+.game-button.is-selected::after {
+  opacity: 0;
+}

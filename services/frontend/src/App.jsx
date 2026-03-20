@@ -27,9 +27,7 @@ function App() {
       <Route
         path="/lottery-certification"
         element={
-          <PublicLayout>
             <LoginPage onLogin={login} isAuthenticated={isAuthenticated} />
-          </PublicLayout>
         }
       />
 
