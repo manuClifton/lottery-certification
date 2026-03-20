@@ -10,6 +10,17 @@ async function verifyDraw(req, res, next) {
   }
 }
 
+async function verifyDrawByDate(req, res, next) {
+  try {
+    const { gameType, date, shift } = req.body;
+    const result = await drawService.verifyDrawByCriteria({ gameType, date, shift });
+    res.json({ data: result });
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
-  verifyDraw
+  verifyDraw,
+  verifyDrawByDate
 };

@@ -40,6 +40,45 @@ async function verifyDrawByHash(drawHash) {
   };
 }
 
+function isAllowedGameType(gameType) {
+  return ["quiniela", "telebingo", "minibingo", "rebingo"].includes(gameType);
+}
+
+function isAllowedShift(shift) {
+  return ["matutina", "vespertina", "nocturna"].includes(shift);
+}
+
+function validateDateString(date) {
+  return /^\d{4}-\d{2}-\d{2}$/.test(date);
+}
+
+async function verifyDrawByCriteria({ gameType, date, shift }) {
+  if (!isAllowedGameType(gameType)) {
+    throw new AppError("gameType is required and must be one of: quiniela, telebingo, minibingo, rebingo", 400);
+  }
+
+  if (!date || !validateDateString(date)) {
+    throw new AppError("date is required and must have YYYY-MM-DD format", 400);
+  }
+
+  if (gameType === "quiniela") {
+    if (!isAllowedShift(shift)) {
+      throw new AppError("shift is required for quiniela and must be one of: matutina, vespertina, nocturna", 400);
+    }
+  }
+
+  const localRecord = drawModel.findByCriteria({ gameType, date, shift });
+
+  return {
+    certified: Boolean(localRecord),
+    drawHash: localRecord ? localRecord.drawHash : null,
+    transactionHash: localRecord ? localRecord.transactionHash : null,
+    gameType,
+    date,
+    shift: gameType === "quiniela" ? shift : null
+  };
+}
+
 function listDraws() {
   return drawModel.listDraws();
 }
@@ -47,5 +86,6 @@ function listDraws() {
 module.exports = {
   certifyDraw,
   verifyDrawByHash,
+  verifyDrawByCriteria,
   listDraws
 };
